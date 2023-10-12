@@ -1,7 +1,7 @@
 --- a/configs/mt7623n_bpir2_defconfig
 +++ b/configs/mt7623n_bpir2_defconfig
-@@ -4,57 +4,142 @@ CONFIG_ARCH_MEDIATEK=y
- CONFIG_SYS_TEXT_BASE=0x81e00000
+@@ -5,57 +5,142 @@ CONFIG_ARCH_MEDIATEK=y
+ CONFIG_TEXT_BASE=0x81e00000
  CONFIG_SYS_MALLOC_F_LEN=0x4000
  CONFIG_NR_DRAM_BANKS=1
 -CONFIG_ENV_SIZE=0x1000
@@ -198,7 +198,7 @@
 +emmc_read_recovery=mmc dev 0 0 ; part start mmc 0 $part_recovery part_addr && part size mmc 0 $part_recovery part_size && run mmc_read_vol
 +mmc_write_production=if test "$bootedfrom" = "SD" ; then run sdmmc_write_production ; else run emmc_write_production ; fi
 +mmc_write_recovery=if test "$bootedfrom" = "SD" ; run sdmmc_write_recovery ; else run emmc_write_recovery ; fi
-+mmc_write_vol=imszb $loadaddr image_size && test 0x$image_size -le 0x$part_size && mmc erase 0x$part_addr 0x$part_size && mmc write $loadaddr 0x$part_addr 0x$image_size
++mmc_write_vol=imszb $loadaddr image_size && test 0x$image_size -le 0x$part_size && mmc erase 0x$part_addr 0x$image_size && mmc write $loadaddr 0x$part_addr 0x$image_size
 +mmc_read_vol=mmc read $loadaddr $part_addr 0x8 && imszb $loadaddr image_size && test 0x$image_size -le 0x$part_size && mmc read $loadaddr 0x$part_addr 0x$image_size && setexpr filesize $image_size * 0x200
 +reset_factory=eraseenv && reset
 +sdmmc_read_emmc_hdr=mmc dev 1 && mmc read $loadaddr 0x1ff8 0x8
